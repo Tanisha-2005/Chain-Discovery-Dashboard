@@ -1,5 +1,5 @@
 # Chain Discovery Dashboard 🛡️
-### Professional Cybersecurity VAPT & SOC Correlation Intern Project
+### Professional Cybersecurity VAPT & SOC Correlation System
 
 Chain Discovery Dashboard is an interactive cybersecurity analysis dashboard that ingests raw vulnerability node datasets (ProtoJSON) and correlates them into actionable attack chains (directed graphs). It serves dual roles:
 1. **VAPT Analyst Portal**: Reviewing security exploits, mapping threats to the MITRE ATT&CK matrix, and formulating remediation code patches.
@@ -7,9 +7,9 @@ Chain Discovery Dashboard is an interactive cybersecurity analysis dashboard tha
 
 ---
 
-## 1. Pipeline Execution Architecture
+## 1. System Architecture
 
-The system is designed as a **6-stage deterministic pipeline** ensuring strict contract validation:
+The system is designed as a **6-stage deterministic pipeline** ensuring strict contract validation and threat enrichment:
 
 ```
           [Raw ProtoJSON Ingest]
@@ -36,23 +36,16 @@ The system is designed as a **6-stage deterministic pipeline** ensuring strict c
           [Dashboard JSON Output]
 ```
 
----
-
-## 2. Upgraded Architecture (Sprint 1 vs VAPT/SOC Level)
-
-To shift the prototype from a simple linear mock to a professional cybersecurity intern project, we have introduced several critical features:
-
-| Feature | Sprint 1 Prototype | Chain Discovery Dashboard Professional Level (Upgraded) |
-|---|---|---|
-| **Input Validation** | Basic dictionary check | Deep validation on syntax, valid hosts/ports (1-65535), duplicate check, and error codes. |
-| **Brain Engine** | Hardcoded mock sequence | Dynamic rule-based correlation mapping nodes based on Kill Chain phases (Recon -> Exploit -> Privilege Esc -> Exfil). |
-| **Enrichment** | Standard text briefs | Full MITRE ATT&CK Technique attribution, customizable remediations, Splunk queries, and Snort rules. |
-| **Interface** | CLI only | High-contrast React dashboard with interactive SVG attack graph visualizations, log stream terminal, and preset selectors. |
-| **API Layer** | Stateless offline CLI | FastAPI server hosting endpoints for running the pipeline, generating live SIEM logs, and serving presets. |
+### Core Pipeline Capabilities
+* **Input Validation**: Deep validation on syntax, valid hosts/ports (1-65535), duplicate check, and error codes.
+* **Brain Engine**: Dynamic rule-based correlation mapping nodes based on Kill Chain phases (Recon -> Exploit -> Privilege Esc -> Exfil).
+* **Enrichment**: Full MITRE ATT&CK Technique attribution, customizable remediations, Splunk queries, and Snort rules.
+* **Interface**: High-contrast React dashboard with interactive SVG attack graph visualizations, log stream terminal, and preset selectors.
+* **API Layer**: FastAPI server hosting endpoints for running the pipeline, generating live SIEM logs, and serving presets.
 
 ---
 
-## 3. Directory Layout
+## 2. Directory Layout
 
 ```
 chain-discovery-dashboard/
@@ -84,7 +77,7 @@ chain-discovery-dashboard/
 
 ---
 
-## 4. Setting Up & Running
+## 3. Setting Up & Running
 
 ### Prerequisites
 * **Python 3.8+** (FastAPI and Uvicorn packages must be installed)
@@ -97,19 +90,19 @@ Simply double-click the **`run_dev.bat`** file in the root directory. This scrip
 
 ### Manual Execution
 
-#### 1. Starting the Backend Server
+#### 1. Starting the Backend API Server
 ```bash
 cd backend
 python main.py --server
 ```
 *(FastAPI Swagger Interactive documentation is available at `http://localhost:8000/docs`)*
 
-#### 2. Running the Offline Pipeline CLI (Sprint 1 backward compatible)
+#### 2. Running the Offline Pipeline CLI
 ```bash
 cd backend
 python main.py
 ```
-This loads `data/protojson.json` and outputs `data/dashboard_data.json` locally.
+This processes the security audit locally by loading `data/protojson.json` and generating `data/dashboard_data.json`.
 
 #### 3. Starting the Frontend UI
 ```bash
@@ -120,26 +113,10 @@ npm run dev
 
 ---
 
-## 5. Dashboard Workspaces & Capabilities
+## 4. Dashboard Workspaces & Capabilities
 
 * **Interactive Topology Map**: Displays the attack path as a node-link diagram. Visual indicators represent vulnerability states. Hovering/clicking nodes lists ports, methods, payloads, and retrieved audit evidence.
 * **VAPT Analyst Panel**: Shows patching instructions, copyable configuration files (like Nginx server blocks, parameterized queries, and safe JWT verification libraries), and generates executive summaries.
 * **SOC SIEM Operations**: Contains a real-time console log, risk indices, Splunk search parameters, and Snort network signatures.
 * **Ingest & Presets Manager**: Contains 3 threat templates (Web Exploitation, Active Directory lateral movements, and AWS cloud exfiltration) as well as direct drag-and-drop file upload.
-* **Offline Sandbox Mode**: In the event that the Python backend is stopped, the frontend continues to operate via an identical Web Assembly/JavaScript fallback, ensuring demo-stability at all times.
-
----
-
-## 6. Uploading to GitHub
-
-To upload this local repository to your own GitHub account:
-
-1. Create a new empty repository on GitHub named `chain-discovery-dashboard` (do not initialize it with a README or .gitignore).
-2. Open a terminal in the root directory of this project.
-3. Run the following commands, replacing `<your-username>` with your GitHub username:
-
-```bash
-git remote add origin https://github.com/<your-username>/chain-discovery-dashboard.git
-git branch -M main
-git push -u origin main
-```
+* **Offline Sandbox Mode**: In the event that the Python backend is offline, the frontend continues to operate via an identical Web Assembly/JavaScript fallback, ensuring maximum stability.
