@@ -127,3 +127,19 @@ npm run dev
 * **SOC SIEM Operations**: Contains a real-time console log, risk indices, Splunk search parameters, and Snort network signatures.
 * **Ingest & Presets Manager**: Contains 3 threat templates (Web Exploitation, Active Directory lateral movements, and AWS cloud exfiltration) as well as direct drag-and-drop file upload.
 * **Offline Sandbox Mode**: In the event that the Python backend is stopped, the frontend continues to operate via an identical Web Assembly/JavaScript fallback, ensuring demo-stability at all times.
+
+---
+
+## 6. Uploading to GitHub
+
+To upload this local repository to your own GitHub account:
+
+1. Create a new empty repository on GitHub named `chain-discovery-dashboard` (do not initialize it with a README or .gitignore).
+2. Open a terminal in the root directory of this project.
+3. Run the following commands, replacing `<your-username>` with your GitHub username:
+
+```bash
+git remote add origin https://github.com/<your-username>/chain-discovery-dashboard.git
+git branch -M main
+git push -u origin main
+```
