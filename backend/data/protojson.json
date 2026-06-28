@@ -1,0 +1,54 @@
+{
+  "pentest_id": "pentest_ad_002",
+  "target": "corp-dc.target.local",
+  "nodes": [
+    {
+      "node_id": "ad_1",
+      "agent": "PORT_SCAN",
+      "type": "port_scan",
+      "host": "corp-dc.target.local",
+      "port": 88,
+      "endpoint": "Kerberos",
+      "method": "TCP",
+      "param": null,
+      "param_location": null,
+      "payload": null,
+      "evidence": "Port 88 (Kerberos) open",
+      "detection_method": "syn_scan",
+      "timestamp": "2026-06-26T11:10:00",
+      "severity": "info"
+    },
+    {
+      "node_id": "ad_2",
+      "agent": "KERBEROAST",
+      "type": "auth_bypass",
+      "host": "corp-dc.target.local",
+      "port": 88,
+      "endpoint": "TGS-REQ",
+      "method": "Request",
+      "param": "SPN",
+      "param_location": "ticket",
+      "payload": "rc4-hmac hash request",
+      "evidence": "Acquired TGS ticket hash for sql-service account",
+      "detection_method": "ticket_analysis",
+      "timestamp": "2026-06-26T11:15:40",
+      "severity": "confirmed"
+    },
+    {
+      "node_id": "ad_3",
+      "agent": "PRIV_ESC",
+      "type": "privilege_escalation",
+      "host": "corp-dc.target.local",
+      "port": 389,
+      "endpoint": "LDAP-BIND",
+      "method": "Bind",
+      "param": "admin_credentials",
+      "param_location": "credentials",
+      "payload": "cracked hash: AdminPass123",
+      "evidence": "Authenticated LDAP bind as Domain Admin",
+      "detection_method": "logon_correlation",
+      "timestamp": "2026-06-26T11:22:12",
+      "severity": "confirmed"
+    }
+  ]
+}
